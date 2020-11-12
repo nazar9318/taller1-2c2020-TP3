@@ -7,6 +7,9 @@ std::string Response::operator()(std::string const &message) {
         Method *method = NULL;
         MethodGet get(this->resources);
         MethodPost post(this->resources);
+        std::cout << Protocol::getMethod(message);
+        std::cout << " " + Protocol::getResource(message);
+        std::cout << " " + Protocol::getProtocol(message) << std::endl;
         if (Protocol::getMethod(message) == "GET") {
             method = &get;
         } else if (Protocol::getMethod(message) == "POST") {

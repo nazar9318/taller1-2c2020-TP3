@@ -14,9 +14,6 @@ void ThreadClient::run() {
         recvd = "";
     } while (recv > 0);
     Response answer(this->resources);
-    std::cout << Protocol::getMethod(message);
-    std::cout << " " + Protocol::getResource(message);
-    std::cout << " " + Protocol::getProtocol(message) << std::endl;
     std::string resp = answer(message);
     this->peer.send((unsigned char*)resp.c_str(), resp.size());
     this->stop();
