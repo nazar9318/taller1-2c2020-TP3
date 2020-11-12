@@ -1,7 +1,13 @@
 #include "client_user.hpp"
+#include <syslog.h>
 
 int main(int argc, char* argv[]) {
-    ClientUser client(argc, argv);
-    client.ejecutar();
+    try {
+        ClientUser client(argc, argv);
+        client.ejecutar();
+    } catch (const SocketError &e) {
+        syslog(LOG_CRIT, "Error: %s\n", e.what());
+        return 0;
+    }
     return 0;
 }

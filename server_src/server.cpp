@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
         server.ejecutar();
     } catch (const SocketError &e) {
         syslog(LOG_CRIT, "Error: %s\n", e.what());
+        return 1;
     }
     return 0;
 }
