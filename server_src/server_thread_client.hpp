@@ -15,8 +15,6 @@ class ThreadClient : public Thread {
     private:
         Socket &peer;
         Resource &resources;
-        //std::atomic<bool> keep_talking;
-        std::string setResponse(std::string const &message);
     public:
         ThreadClient(Socket &&peer, Resource &resources);
         void run() override;

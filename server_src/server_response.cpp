@@ -3,7 +3,7 @@
 Response::Response(Resource &resources) :
 resources(resources) {}
 
-std::string Response::setResponse(std::string const &message) {
+std::string Response::operator()(std::string const &message) {
         Method *method = NULL;
         MethodGet get(this->resources);
         MethodPost post(this->resources);

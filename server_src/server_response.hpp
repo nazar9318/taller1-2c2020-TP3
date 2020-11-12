@@ -18,7 +18,7 @@ class Response {
     public:
         explicit Response(Resource &resources);
 
-        std::string setResponse(std::string const &message);
+        std::string operator()(std::string const &message);
         
         virtual ~Response();
 };

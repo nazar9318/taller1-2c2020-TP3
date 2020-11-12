@@ -136,6 +136,5 @@ void Socket::close() {
 }
 
 Socket::~Socket() {
-	shutdown(this->fd, SHUT_RDWR);
 	::close(this->fd);
 }
