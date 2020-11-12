@@ -16,6 +16,7 @@ class ThreadAccepter : public Thread {
         Socket &server;
         Resource &resources;
         std::vector<ThreadClient*> accepted;
+        bool keep_accepting;
     public:
         ThreadAccepter(Socket &server, Resource &resources);
 

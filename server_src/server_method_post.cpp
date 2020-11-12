@@ -5,12 +5,11 @@ MethodPost::MethodPost(Resource &resources)
 
 std::string MethodPost::respond(std::string const &message) {
     std::string resource = Protocol::getResource(message);
+    std::string protocol = Protocol::getProtocol(message);
     if (resource.compare("/") == 0) {
-        std::string protocol = Protocol::getProtocol(message);
-        return "HTTP 403 FORBIDDEN\n\n";
+        return protocol + " 403 FORBIDDEN\n\n";
     } else {
         this->resources.store(resource, Protocol::getBody(message));
-        std::string protocol = Protocol::getProtocol(message);
         std::string result = " 200 OK\n\n";
         return protocol + result + this->resources(resource);
     }

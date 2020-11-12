@@ -15,11 +15,10 @@ class ThreadClient : public Thread {
     private:
         Socket &peer;
         Resource &resources;
-        std::atomic<bool> keep_talking;
+        //std::atomic<bool> keep_talking;
         std::string setResponse(std::string const &message);
     public:
         ThreadClient(Socket &&peer, Resource &resources);
-        bool talking() const;
         void run() override;
         void closeCommunication();
         void stop();
