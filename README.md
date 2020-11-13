@@ -66,3 +66,7 @@
 		Permite implementar la protección de recursos respetando el RAII,
 		su constructor recibe una referencia a un mutex, y en el mismo
 		llama al método lock() del mutex, luego su destructor implementa el unlock()
+
+# Diagrama de delegación de clases:
+
+![DiagramaTP3]()
