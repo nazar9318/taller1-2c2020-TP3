@@ -16,10 +16,14 @@ class Response {
         Resource &resources;
         Response() = default;
     public:
+        //Constructor: recibe una referencia al repositorio de recursos
         explicit Response(Resource &resources);
 
+        //Función: devuelve la respuesta al petitorio según sea POST o GET,
+        //en otro caso indica que se pasó un método no válido
         std::string operator()(std::string const &message);
-        
+
+        //Destructor estándar
         virtual ~Response();
 };
 

@@ -13,12 +13,15 @@ class Resource {
         std::mutex mutex;
         std::map<std::string, std::string> resources;
     public:
+        //Constructor estándar
         Resource();
 
-        std::string operator()(std::string const &resource);
+        //Devuelve el recurso de la clave key
+        std::string operator()(std::string const &key);
         
         void store(std::string const &key, std::string const &value);
 
+        //Destructor estándar
         ~Resource();
 };
 

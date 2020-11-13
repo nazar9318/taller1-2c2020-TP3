@@ -16,10 +16,15 @@ class ServerUser {
         Resource resources;
         std::vector<ThreadClient*> accepted;
     public:
+        //Función: crea el socket servidor e
+        //inicializa el repositorio de los recursos
         ServerUser(int argc, char* argv[]);
 
+        //Función: ejecuta el flujo del programa,
+        //hasta que el usuario ingresa 'q'
         void ejecutar();
         
+        //Función: libera recursos
         ~ServerUser();
 };
 

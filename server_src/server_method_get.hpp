@@ -9,10 +9,13 @@
 
 class MethodGet : public Method {
     public:
+        //Constructor: recibe una referencia al repositorio de recursos
         explicit MethodGet(Resource &resources);
 
+        //Función: devuelve la respuesta correspondiente al método GET
         std::string respond(std::string const &message) override;
         
+        //Destructor estándar
         ~MethodGet();
 };
 

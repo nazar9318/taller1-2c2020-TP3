@@ -16,10 +16,18 @@ class ThreadClient : public Thread {
         Socket &peer;
         Resource &resources;
     public:
+        //Función: recibe las referencias al peer con
+        //el que se comunica y al repositorio de recursos
         ThreadClient(Socket &&peer, Resource &resources);
+        
+        //Función: lee el mensaje recibido por el peer
+        //y le envía la respuesta al mismo
         void run() override;
-        void closeCommunication();
+        
+        //Función: cierra el socket peer
         void stop();
+        
+        //Función: libera recursos
         virtual ~ThreadClient();
 };
 

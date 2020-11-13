@@ -13,10 +13,13 @@ class Method {
         Resource &resources;
         Method() = default;
     public:
+        //Constructor: recibe una referencia al repositorio de recursos
         explicit Method(Resource &resources);
 
+        //Función: devuelve la respuesta al petitorio
         virtual std::string respond(std::string const &message) = 0;
         
+        //Destructor estándar
         virtual ~Method();
 };
 

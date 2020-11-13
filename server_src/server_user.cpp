@@ -2,6 +2,9 @@
 
 ServerUser::ServerUser(int argc, char* argv[]) :
 server(NULL, argv[1], true) {
+	if (argc != 3) {
+		throw(" cantidad de argumentos inválida\n");
+	}
     std::string root = "root";
 	this->resources.store(root, Protocol::getBodyFile(argv[2]));
 }

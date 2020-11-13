@@ -9,10 +9,13 @@
 
 class MethodPost : public Method {
     public:
+        //Constructor: recibe una referencia al repositorio de recursos
         explicit MethodPost(Resource &resources);
 
+        //Función: devuelve la respuesta correspondiente al método POST
         std::string respond(std::string const &message) override;
         
+        //Destructor estándar
         ~MethodPost();
 };
 

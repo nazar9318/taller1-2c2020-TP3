@@ -1,7 +1,11 @@
 #include "client_user.hpp"
 
 ClientUser::ClientUser(int argc, char* argv[]) : 
-client(argv[1], argv[2], false) {}
+client(argv[1], argv[2], false) {
+    if (argc != 3) {
+        throw(" cantidad de argumentos inválida\n");
+    }
+}
 
 void ClientUser::ejecutar() {
     std::string message;

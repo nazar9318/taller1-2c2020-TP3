@@ -40,9 +40,6 @@ int Socket::setFileDesc(struct addrinfo *dirs) {
 	return -1;
 }
 
-//Funcion: Completa los criterios de direccion para un server
-//Pre condicion: Ninguna
-//Post condicion: Ninguna
 struct addrinfo Socket::setAddressCriteria(bool es_server) {
 	struct addrinfo criteria;
 	memset(&criteria, 0, sizeof(struct addrinfo));
@@ -52,10 +49,6 @@ struct addrinfo Socket::setAddressCriteria(bool es_server) {
 	return criteria;
 }
 
-//Funcion: Crea las direcciones con las que el server va a intentar conectarse
-//Pre condicion: Puerto debe ser existente.
-//Post condicion: Si getaddrinfo falla se libera la memoria, pero en caso 
-//de tener exito debe ser el llamador el que libere la memoria reservada.
 struct addrinfo* Socket::setDirs(const char* host, const char* port, bool is) {
 	struct addrinfo criteria = Socket::setAddressCriteria(is);
 	struct addrinfo *direcciones;

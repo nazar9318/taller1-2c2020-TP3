@@ -8,6 +8,9 @@ int main(int argc, char* argv[]) {
     } catch (const SocketError &e) {
         syslog(LOG_CRIT, "Error: %s\n", e.what());
         return 0;
+    } catch (const std::exception &e) {
+        syslog(LOG_CRIT, "Error: %s\n", e.what());
+        return 0;
     }
     return 0;
 }
