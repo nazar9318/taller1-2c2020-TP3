@@ -1,6 +1,7 @@
 #ifndef CLIENT_USER_H
 #define CLIENT_USER_H
 
+#include <vector>
 #include <string>
 #include <iostream>
 #include "../common_src/common_socket.hpp"

@@ -5,7 +5,7 @@
 #include <atomic>
 #include <vector>
 #include <string>
-#include "server_protocol.hpp"
+#include "server_parser.hpp"
 #include "server_response.hpp"
 #include "server_resources.hpp"
 #include "../common_src/common_socket.hpp"
@@ -15,6 +15,7 @@ class ThreadClient : public Thread {
     private:
         Socket &peer;
         Resource &resources;
+        bool is_running;
     public:
         //Función: recibe las referencias al peer con
         //el que se comunica y al repositorio de recursos
@@ -26,6 +27,8 @@ class ThreadClient : public Thread {
         
         //Función: cierra el socket peer
         void stop();
+
+        bool running() const;
         
         //Función: libera recursos
         virtual ~ThreadClient();

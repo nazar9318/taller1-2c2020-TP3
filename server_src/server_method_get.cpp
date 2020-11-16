@@ -4,8 +4,8 @@ MethodGet::MethodGet(Resource &resources)
 : Method(resources) {}
 
 std::string MethodGet::respond(std::string const &message) {
-	std::string resource = Protocol::getResource(message);
-	std::string protocol = Protocol::getProtocol(message);
+	std::string resource = Parser::getResource(message);
+	std::string protocol = Parser::getProtocol(message);
 	if (resource.compare("/") == 0) {
 		std::string result = " 200 OK\nContent-Type: text/html\n\n";
 		return protocol + result + this->resources("root");

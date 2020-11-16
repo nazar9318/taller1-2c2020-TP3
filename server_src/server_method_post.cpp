@@ -4,12 +4,12 @@ MethodPost::MethodPost(Resource &resources)
 : Method(resources) {}
 
 std::string MethodPost::respond(std::string const &message) {
-    std::string resource = Protocol::getResource(message);
-    std::string protocol = Protocol::getProtocol(message);
+    std::string resource = Parser::getResource(message);
+    std::string protocol = Parser::getProtocol(message);
     if (resource.compare("/") == 0) {
         return protocol + " 403 FORBIDDEN\n\n";
     } else {
-        this->resources.store(resource, Protocol::getBody(message));
+        this->resources.store(resource, Parser::getBody(message));
         std::string result = " 200 OK\n\n";
         return protocol + result + this->resources(resource);
     }

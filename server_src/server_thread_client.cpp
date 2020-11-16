@@ -2,7 +2,7 @@
 #include "server_thread_client.hpp"
 
 ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :
-peer(peer), resources(resources) {}
+peer(peer), resources(resources), is_running(true) {}
 
 void ThreadClient::run() {
     std::string recvd = "";
@@ -16,7 +16,11 @@ void ThreadClient::run() {
     Response answer(this->resources);
     std::string resp = answer(message);
     this->peer.send((unsigned char*)resp.c_str(), resp.size());
-    this->stop();
+    is_running = false;
+}
+
+bool ThreadClient::running() const {
+    return this->is_running;
 }
 
 void ThreadClient::stop() {

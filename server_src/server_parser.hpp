@@ -1,19 +1,19 @@
-#ifndef SERVER_PROTOCOL_H
-#define SERVER_PROTOCOL_H
+#ifndef SERVER_PARSER_H
+#define SERVER_PARSER_H
 
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 
-class Protocol {
+class Parser {
     private:
         //Función: devuelve la palabra en la posición p de message
         static std::string advanceIn(std::string const &message, size_t p);
         
     public:
         //Constructor estándar
-        Protocol();
+        Parser();
 
         //Función: devuelve el método del petitorio
         static std::string getMethod(std::string const &message);
@@ -31,7 +31,7 @@ class Protocol {
         static std::string getBodyFile(std::string const &file_name);
         
         //Destructor estándar
-        ~Protocol();
+        ~Parser();
 };
 
 #endif

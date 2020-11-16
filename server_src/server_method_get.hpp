@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include "server_method.hpp"
-#include "server_protocol.hpp"
+#include "server_parser.hpp"
 #include "server_resources.hpp"
 
 class MethodGet : public Method {

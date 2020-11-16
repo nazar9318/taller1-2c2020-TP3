@@ -6,7 +6,7 @@ server(NULL, argv[1], true) {
 		throw(" cantidad de argumentos inválida\n");
 	}
     std::string root = "root";
-	this->resources.store(root, Protocol::getBodyFile(argv[2]));
+	this->resources.store(root, Parser::getBodyFile(argv[2]));
 }
 
 void ServerUser::ejecutar() {
@@ -19,6 +19,7 @@ void ServerUser::ejecutar() {
 		std::cout << "Comando inválido\n";
 	}
 	accepter.stop();
+	this->server.close();
 	accepter.join();
 }
 

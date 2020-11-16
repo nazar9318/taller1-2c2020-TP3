@@ -98,8 +98,9 @@ int Socket::recv(unsigned char* msge, size_t size) {
 }
 
 Socket::Socket(Socket&& other) {
-    this->fd = std::move(other.fd);
-	this->is_server = std::move(other.is_server);
+    this->fd = other.fd;
+	this->is_server = other.is_server;
+	other.fd = -1;
 }
 
 Socket::Socket(int accepted) {
@@ -112,7 +113,7 @@ Socket::Socket(int accepted) {
 
 Socket Socket::accept() {
 	int fd = ::accept(this->fd, NULL, NULL);
-	return std::move(Socket(fd));
+	return Socket(fd);
 }
 
 int Socket::listen() {
@@ -124,10 +125,13 @@ int Socket::listen() {
 }
 
 void Socket::close() {
+	::close(this->fd);
 	shutdown(this->fd, SHUT_RDWR);
 	this->fd = -1;
 }
 
 Socket::~Socket() {
-	::close(this->fd);
+	if (this->fd != -1) {
+		::close(this->fd);
+	}
 }
