@@ -4,9 +4,6 @@ Response::Response(Resource &resources) :
 resources(resources) {}
 
 std::string Response::operator()(std::string const &message) {
-    std::cout << Parser::getMethod(message);
-    std::cout << " " + Parser::getResource(message);
-    std::cout << " " + Parser::getProtocol(message) << std::endl;
     if (Parser::getMethod(message) == "GET") {
         MethodGet get(this->resources);
         return get.respond(message);
@@ -14,9 +11,8 @@ std::string Response::operator()(std::string const &message) {
         MethodPost post(this->resources);
         return post.respond(message);
     }
-    std::string format = "HTTP 405 METHOD NOT ALLOWED\n\n";
-    std::string unknown = " es un comando desconocido\n";
-    return format + Parser::getMethod(message) + unknown;
+    MethodError error(this->resources);
+    return error.respond(message);
 }
 
 Response::~Response() {}

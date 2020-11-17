@@ -71,7 +71,7 @@ Socket::Socket(const char* host, const char* port, bool is) {
 	freeaddrinfo(direcciones);
 }
 
-int Socket::send(unsigned char* msge, size_t size) {
+int Socket::send(uint8_t* msge, size_t size) {
 	int sent = 0;
 	size_t total = 0;
 	do {
@@ -84,7 +84,7 @@ int Socket::send(unsigned char* msge, size_t size) {
 	return total;
 }
 
-int Socket::recv(unsigned char* msge, size_t size) {
+int Socket::recv(uint8_t* msge, size_t size) {
 	int received = 0;
 	size_t total = 0;
 	do {

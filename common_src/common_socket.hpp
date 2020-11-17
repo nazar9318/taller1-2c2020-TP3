@@ -59,10 +59,10 @@ class Socket {
 
 		//Funcion: Envia mensaje de tamaño size al
 		//file_descriptor con el que está conectado.
-		int send(unsigned char* msge, size_t size);
+		int send(uint8_t* msge, size_t size);
 
 		//Funcion: El server recibe el mensaje del cliente
-		int recv(unsigned char* msge, size_t size);
+		int recv(uint8_t* msge, size_t size);
 
 		//Funcion: Server recibe y acepta una conexion del cliente
 		int listen();

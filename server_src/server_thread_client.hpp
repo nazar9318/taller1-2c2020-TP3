@@ -8,6 +8,7 @@
 #include "server_parser.hpp"
 #include "server_response.hpp"
 #include "server_resources.hpp"
+#include "server_impressor.hpp"
 #include "../common_src/common_socket.hpp"
 #include "../common_src/common_thread.hpp"
 

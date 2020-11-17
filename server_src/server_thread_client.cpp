@@ -5,17 +5,23 @@ ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :
 peer(peer), resources(resources), is_running(true) {}
 
 void ThreadClient::run() {
-    std::string recvd = "";
-    std::string message = "";
     int recv = 0;
+    size_t total = 0;
+    std::vector<uint8_t> buffer(64);
     do {
-        recv = this->peer.recv((unsigned char*)recvd.c_str(), 64);
-        message += recvd;
-        recvd = "";
+        recv = this->peer.recv(buffer.data(), buffer.size());
+        total += recv;
+        if (total >= buffer.size()) {
+            buffer.resize(total);
+        }
     } while (recv > 0);
+    std::string message(buffer.begin(), buffer.end());
+    Impressor out;
+    out(message);
     Response answer(this->resources);
     std::string resp = answer(message);
-    this->peer.send((unsigned char*)resp.c_str(), resp.size());
+    std::vector<uint8_t> resp_sent(resp.begin(), resp.end());
+    this->peer.send(resp_sent.data(), resp_sent.size());
     is_running = false;
 }
 

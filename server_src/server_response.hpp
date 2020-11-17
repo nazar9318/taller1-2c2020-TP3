@@ -10,6 +10,7 @@
 #include "server_method.hpp"
 #include "server_method_get.hpp"
 #include "server_method_post.hpp"
+#include "server_method_error.hpp"
 
 class Response {
     protected:

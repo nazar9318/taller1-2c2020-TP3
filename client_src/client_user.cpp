@@ -1,4 +1,5 @@
 #include "client_user.hpp"
+#include <vector>
 
 ClientUser::ClientUser(int argc, char* argv[]) : 
 client(argv[1], argv[2], false) {
@@ -7,23 +8,26 @@ client(argv[1], argv[2], false) {
     }
 }
 
-void ClientUser::ejecutar() {
+void ClientUser::run() {
     std::string message;
     std::cin >> message;
     this->client.send((unsigned char*)message.c_str(), message.size());
-    std::string recvd = "";
-    std::string response = "";
     int recv = 0;
+    size_t total = 0;
+    std::vector<uint8_t> buffer(64);
     do {
-        recv = this->client.recv((unsigned char*)recvd.c_str(), 64);
-        response += recvd;
-        recvd = "";
+        recv = this->client.recv(buffer.data(), buffer.size());
+        total += recv;
+        if (total >= buffer.size()) {
+            buffer.resize(total);
+        }
     } while (recv > 0);
+    std::string response(buffer.begin(), buffer.end());
     std::cout << response << std::endl;
 }
 
-void ClientUser::run() {
-    this->ejecutar();
+void ClientUser::ejecutar() {
+    this->run();
 }
 
 ClientUser::~ClientUser() {}
