@@ -17,6 +17,7 @@ void ServerUser::ejecutar() {
 	std::cin >> command;
 	while (command.compare("q") != 0) {
 		std::cout << "Comando inválido\n";
+		std::cin >> command;
 	}
 	accepter.stop();
 	this->server.close();

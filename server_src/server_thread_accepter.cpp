@@ -14,15 +14,20 @@ void ThreadAccepter::stopClients() {
 }
 
 void ThreadAccepter::run() {
-	while (keep_accepting) {
-		Socket peer = this->server.accept();
-		this->accepted.push_back(new ThreadClient(std::move(peer), this->resources));
-		this->accepted.back()->start();
-		this->stopClients();
-	}
+	try {
+		while (keep_accepting) {
+			Socket peer = this->server.accept();
+			this->accepted.push_back(new ThreadClient(std::move(peer), this->resources));
+			this->accepted.back()->start();
+			this->stopClients();
+		}
+    } catch (const SocketError &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 void ThreadAccepter::stop() {
+	keep_accepting = false;
 	for (unsigned int i = 0; i < this->accepted.size(); i++) {
 		this->accepted[i]->stop();
 		this->accepted[i]->join();

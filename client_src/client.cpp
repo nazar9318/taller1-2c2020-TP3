@@ -1,16 +1,15 @@
 #include "client_user.hpp"
-#include <syslog.h>
 
 int main(int argc, char* argv[]) {
     try {
         ClientUser client(argc, argv);
         client.ejecutar();
+        return 0;
     } catch (const SocketError &e) {
-        syslog(LOG_CRIT, "Error: %s\n", e.what());
+        std::cout << e.what() << std::endl;
         return 0;
     } catch (const std::exception &e) {
-        syslog(LOG_CRIT, "Error: %s\n", e.what());
+        std::cout << e.what() << std::endl;
         return 0;
     }
-    return 0;
 }
