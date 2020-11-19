@@ -57,6 +57,10 @@ class Socket {
 
 		Socket accept();
 
+		void stopSending();
+
+		void stopReceiving();
+
 		//Funcion: Envia mensaje de tamaño size al
 		//file_descriptor con el que está conectado.
 		int send(uint8_t* msge, size_t size);

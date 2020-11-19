@@ -124,6 +124,14 @@ int Socket::listen() {
 	return 0;
 }
 
+void Socket::stopSending() {
+	shutdown(this->fd, SHUT_WR);
+}
+
+void Socket::stopReceiving() {
+	shutdown(this->fd, SHUT_RD);
+}
+
 void Socket::close() {
 	::close(this->fd);
 	shutdown(this->fd, SHUT_RDWR);
