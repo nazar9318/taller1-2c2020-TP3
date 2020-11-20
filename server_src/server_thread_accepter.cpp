@@ -6,33 +6,33 @@ ThreadAccepter::ThreadAccepter(Socket &server, Resource &resources)
 void ThreadAccepter::stopClients() {
 	for (unsigned int i = 0; i < this->accepted.size(); i++) {
 		if (!this->accepted[i]->running()) {
-			this->accepted[i]->stop();
 			this->accepted[i]->join();
 			delete this->accepted[i];
+			this->accepted.erase(this->accepted.begin() + i);
 		}
 	}
 }
 
 void ThreadAccepter::run() {
-	try {
-		while (keep_accepting) {
+	while (keep_accepting) {
+		try {
 			Socket peer = this->server.accept();
 			this->accepted.push_back(new ThreadClient(std::move(peer), this->resources));
 			this->accepted.back()->start();
 			this->stopClients();
-		}
-    } catch (const SocketError &e) {
-        std::cout << e.what() << std::endl;
-    }
+		} catch (const SocketError &e) {
+			for (unsigned int i = 0; i < this->accepted.size(); i++) {
+				this->accepted[i]->stop();
+				this->accepted[i]->join();
+				delete this->accepted[i];
+			}
+    		}
+	}
 }
 
 void ThreadAccepter::stop() {
 	keep_accepting = false;
-	for (unsigned int i = 0; i < this->accepted.size(); i++) {
-		this->accepted[i]->stop();
-		this->accepted[i]->join();
-		delete this->accepted[i];
-	}
 }
 
 ThreadAccepter::~ThreadAccepter() {}
+

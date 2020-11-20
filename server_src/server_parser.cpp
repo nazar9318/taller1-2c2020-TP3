@@ -28,12 +28,7 @@ std::string Parser::getBodyFile(std::string const &file_name) {
 	std::ifstream file;
 	file.open(file_name);
 	std::string body = "";
-	std::getline(file, body);
-	while (body.size() > 0) {
-		std::getline(file, body);
-	}
 	std::string aux;
-	body = "";
 	while (!file.eof()) {
 		std::getline(file, aux);
 		body += aux+"\n";
@@ -59,3 +54,4 @@ std::string Parser::getBody(std::string const &message) {
 }
 
 Parser::~Parser() {}
+

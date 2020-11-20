@@ -3,22 +3,20 @@
 #include "server_thread_client.hpp"
 
 ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :
-peer(peer), resources(resources), is_running(true) {}
+peer(std::move(peer)), resources(resources), is_running(true) {}
 
 std::string ThreadClient::receiveMessage() {
-    int recv = 0;
-    size_t total = 0;
-    std::vector<uint8_t> buffer(64);
-    do {
-        recv = this->peer.recv(buffer.data(), buffer.size());
-        total += recv;
-        if (total >= buffer.size()) {
-            buffer.resize(total);
-        }
-    } while (recv > 0);
-    std::string message(buffer.begin(), buffer.end());
+	std::stringstream stream;
+	int recvd = 0;
+        do {
+            std::vector<uint8_t> buffer(64);
+            recvd = this->peer.recv(buffer.data(), buffer.size());
+            std::string response(buffer.begin(), buffer.end());
+            stream << response;
+        } while (recvd > 0);
+	std::string message = stream.str();
     this->peer.stopReceiving();
-    return message;
+	return message;
 }
 
 void ThreadClient::run() {
@@ -31,7 +29,7 @@ void ThreadClient::run() {
         std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
         this->peer.send(resp_to_send.data(), resp_to_send.size());
         this->peer.stopSending();
-        is_running = false;
+        this->is_running = false;
     } catch (const SocketError &e) {
         std::cout << e.what() << std::endl;
     }
@@ -42,8 +40,8 @@ bool ThreadClient::running() const {
 }
 
 void ThreadClient::stop() {
-    this->is_running = false;
     this->peer.close();
 }
 
 ThreadClient::~ThreadClient() {}
+

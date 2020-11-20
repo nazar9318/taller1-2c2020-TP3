@@ -76,11 +76,11 @@ int Socket::send(uint8_t* msge, size_t size) {
 	size_t total = 0;
 	do {
 		sent = ::send(this->fd, msge + total, size - total, MSG_NOSIGNAL);
-		if (sent == -1) {
+		if (sent < 0) {
 			throw SocketError("fallo al enviar mensaje: %d\n", sent, __LINE__);
 		}
 		total += sent;
-	} while (total < size && sent > 0);
+	} while (sent == (int)(size-total));
 	return total;
 }
 
@@ -89,18 +89,20 @@ int Socket::recv(uint8_t* msge, size_t size) {
 	size_t total = 0;
 	do {
 		received = ::recv(this->fd, msge + total, size - total, 0);
-		if (received == -1) {
+		if (received < 0) {
 			throw SocketError("fallo al recibir mensaje: %d\n", received, __LINE__);
 		}
 		total += received;
-	} while (received > 0 && total < size);
+	} while (received == (int)(size-total));
 	return total;
 }
 
 Socket::Socket(Socket&& other) {
-    this->fd = other.fd;
-	this->is_server = other.is_server;
-	other.fd = -1;
+	if (this != &other) {
+		this->fd = std::move(other.fd);
+		this->is_server = std::move(other.is_server);
+		other.fd = -1;
+	}
 }
 
 Socket::Socket(int accepted) {
@@ -133,8 +135,8 @@ void Socket::stopReceiving() {
 }
 
 void Socket::close() {
-	::close(this->fd);
 	shutdown(this->fd, SHUT_RDWR);
+	::close(this->fd);
 	this->fd = -1;
 }
 
@@ -143,3 +145,4 @@ Socket::~Socket() {
 		::close(this->fd);
 	}
 }
+
