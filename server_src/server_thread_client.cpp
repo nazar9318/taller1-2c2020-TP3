@@ -15,32 +15,36 @@ std::string ThreadClient::receiveMessage() {
             stream << response;
         } while (recvd > 0);
 	std::string message = stream.str();
-    this->peer.stopReceiving();
+	this->peer.stopReceiving();
 	return message;
 }
 
 void ThreadClient::run() {
-    try {
-        std::string message = this->receiveMessage();
-        Impressor out;
-        out(message);
-        Response answer(this->resources);
-        std::string resp = answer(message);
-        std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
-        this->peer.send(resp_to_send.data(), resp_to_send.size());
-        this->peer.stopSending();
-        this->is_running = false;
-    } catch (const SocketError &e) {
-        std::cout << e.what() << std::endl;
-    }
+	try {
+		std::string message = this->receiveMessage();
+		Impressor out;
+		out(message);
+		Response answer(this->resources);
+		std::string resp = answer(message);
+		std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
+		this->peer.send(resp_to_send.data(), resp_to_send.size());
+		this->peer.stopSending();
+		this->is_running = false;
+	} catch (const SocketError &e) {
+		if (!this->is_running) {
+			std::cout << e.what() << std::endl;
+		}
+	} catch (...) {
+		std::cout << "Unkown Error\n" << std::endl;
+	}
 }
 
 bool ThreadClient::running() const {
-    return this->is_running;
+	return this->is_running;
 }
 
 void ThreadClient::stop() {
-    this->peer.close();
+	this->peer.close();
 }
 
 ThreadClient::~ThreadClient() {}

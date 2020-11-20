@@ -12,7 +12,6 @@ std::string MethodGet::respond(std::string const &message) {
 		answer << this->resources("root");
 		return answer.str();
 	} else if (this->resources(resource) != "") {
-		answer << Parser::getProtocol(message);
 		answer << " 200 OK\nContent-Type: text/html\n\n";
 		answer << this->resources(resource);
 		return answer.str();
@@ -22,3 +21,4 @@ std::string MethodGet::respond(std::string const &message) {
 }
 
 MethodGet::~MethodGet() {}
+

@@ -25,8 +25,11 @@ void ThreadAccepter::run() {
 				this->accepted[i]->stop();
 				this->accepted[i]->join();
 				delete this->accepted[i];
+				this->accepted.erase(this->accepted.begin() + i);
 			}
-    		}
+		} catch (...) {
+			std::cout << "Unkown Error\n" << std::endl;
+		}
 	}
 }
 

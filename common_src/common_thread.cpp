@@ -1,10 +1,13 @@
 #include <utility>
 #include "common_thread.hpp"
+#include "socket_error.hpp"
 
 Thread::Thread() {}
 
 void Thread::start() {
-   this->thread = std::thread(&Thread::run, this);
+	try {
+		this->thread = std::thread(&Thread::run, this);
+	} catch (...) {}
 }
 
 void Thread::join() {

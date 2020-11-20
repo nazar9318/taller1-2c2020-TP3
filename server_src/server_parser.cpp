@@ -50,6 +50,7 @@ std::string Parser::getBody(std::string const &message) {
 		std::getline(buff, aux);
 		body += aux+"\n";
 	}
+	body.pop_back();
 	return body;
 }
 

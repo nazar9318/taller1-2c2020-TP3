@@ -77,7 +77,7 @@ int Socket::send(uint8_t* msge, size_t size) {
 	do {
 		sent = ::send(this->fd, msge + total, size - total, MSG_NOSIGNAL);
 		if (sent < 0) {
-			throw SocketError("fallo al enviar mensaje: %d\n", sent, __LINE__);
+			throw SocketError("fallo al enviar mensaje: %d, %d\n", sent, __LINE__);
 		}
 		total += sent;
 	} while (sent == (int)(size-total));
@@ -90,7 +90,7 @@ int Socket::recv(uint8_t* msge, size_t size) {
 	do {
 		received = ::recv(this->fd, msge + total, size - total, 0);
 		if (received < 0) {
-			throw SocketError("fallo al recibir mensaje: %d\n", received, __LINE__);
+			throw SocketError("fallo al recibir mensaje: %d, %d\n", received, __LINE__);
 		}
 		total += received;
 	} while (received == (int)(size-total));

@@ -23,7 +23,7 @@ void ClientUser::run() {
             std::string response(buffer.begin(), buffer.end());
             std::cout << response;
         } while (recvd > 0);
-        std::cout << std::endl;
+	this->client.stopReceiving();
     } catch (const SocketError &e) {
         std::cout << e.what() << std::endl;
     }
