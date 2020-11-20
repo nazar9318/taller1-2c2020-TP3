@@ -33,6 +33,7 @@ std::string Parser::getBodyFile(std::string const &file_name) {
 		std::getline(file, aux);
 		body += aux+"\n";
 	}
+	body.pop_back();
 	return body;
 }
 
