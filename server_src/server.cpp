@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     } catch (const SocketError &e) {
         std::cout << e.what() << std::endl;
         return 1;
-    } catch (const std::exception &e) {
+    } catch (const Error &e) {
         std::cout << e.what() << std::endl;
         return 1;
     } catch (...) {

@@ -5,7 +5,7 @@
 ClientUser::ClientUser(int argc, char* argv[]) : 
 client(argv[1], argv[2], false) {
 	if (argc != 3) {
-		throw(" cantidad de argumentos inválida\n");
+		throw Error("Cantidad de argumentos inválida %d\n", errno);
 	}
 }
 
@@ -14,7 +14,7 @@ void ClientUser::run() {
 		std::stringbuf buffer_in;
 		std::cin.get(buffer_in, EOF);
 		std::string message = buffer_in.str();
-		this->client.send((unsigned char*)message.c_str(), message.size());
+		this->client.send((uint8_t*)message.data(), message.size());
 		this->client.stopSending();
 		int recvd = 0;
 		std::stringstream out;
@@ -28,7 +28,11 @@ void ClientUser::run() {
 		this->client.stopReceiving();
 	} catch (const SocketError &e) {
 		std::cout << e.what() << std::endl;
-	}
+	} catch (const Error &e) {
+		std::cout << e.what() << std::endl;
+     } catch (...) {
+        std::cout << "Error desconocido\n" << std::endl;
+    }
 }
 
 void ClientUser::ejecutar() {

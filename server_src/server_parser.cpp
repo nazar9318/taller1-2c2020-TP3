@@ -5,7 +5,7 @@ Parser::Parser() {}
 std::string Parser::advanceIn(std::string const &message, size_t p) {
     std::stringstream buffer;
     buffer << message;
-    std::string result = "";
+    std::string result;
     for (unsigned int i = 0; i < p; i++) {
         buffer >> result;
     }
@@ -27,7 +27,7 @@ std::string Parser::getProtocol(std::string const &message) {
 std::string Parser::getBodyFile(std::string const &file_name) {
 	std::ifstream file;
 	file.open(file_name);
-	std::string body = "";
+	std::string body;
 	std::string aux;
 	while (!file.eof()) {
 		std::getline(file, aux);
@@ -39,7 +39,7 @@ std::string Parser::getBodyFile(std::string const &file_name) {
 
 std::string Parser::getBody(std::string const &message) {
 	std::stringstream buff;
-	std::string body = "";
+	std::string body;
 	buff << message;
 	std::getline(buff, body);
 	while (body.size() > 0) {
@@ -56,4 +56,3 @@ std::string Parser::getBody(std::string const &message) {
 }
 
 Parser::~Parser() {}
-

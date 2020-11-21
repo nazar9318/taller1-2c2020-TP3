@@ -7,7 +7,11 @@ Thread::Thread() {}
 void Thread::start() {
 	try {
 		this->thread = std::thread(&Thread::run, this);
-	} catch (...) {}
+	} catch (const Error &e) {
+        std::cout << e.what() << std::endl;
+	} catch (...) {
+		std::cout << "Error desconocido\n" << std::endl;
+	}
 }
 
 void Thread::join() {

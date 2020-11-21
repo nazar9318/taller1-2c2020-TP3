@@ -15,7 +15,7 @@ class Error : public std::exception {
     public:
         explicit Error(const char* fmt, ...) noexcept;
 
-        virtual const char *what() const noexcept = 0;
+        virtual const char *what() const noexcept;
         
         virtual ~Error() noexcept;
 };

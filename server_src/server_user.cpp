@@ -3,7 +3,7 @@
 ServerUser::ServerUser(int argc, char* argv[]) :
 server(NULL, argv[1], true) {
 	if (argc != 3) {
-		throw(" cantidad de argumentos inválida\n");
+		throw Error("Cantidad de argumentos inválida %d\n", errno);
 	}
 	std::string root = "root";
 	this->resources.store(root, Parser::getBodyFile(argv[2]));
@@ -24,6 +24,8 @@ void ServerUser::ejecutar() {
 		this->server.close();
 		accepter.join();	
 	} catch (const SocketError &e) {
+		std::cout << e.what() << std::endl;
+	} catch (const Error &e) {
 		std::cout << e.what() << std::endl;
 	} catch (...) {
 		std::cout << "Unkown Error\n" << std::endl;

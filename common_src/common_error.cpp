@@ -10,4 +10,8 @@ Error::Error(const char* fmt, ...) noexcept {
 	msg[BUF - 1] = 0;
 }
 
+const char* Error::what() const noexcept {
+	return this->msg;
+}
+
 Error::~Error() noexcept {}
