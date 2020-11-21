@@ -17,7 +17,7 @@ class Resource {
         Resource();
 
         //Devuelve el recurso de la clave key
-        std::string operator()(std::string const &key);
+        std::string operator[](std::string const &key);
         
         void store(std::string const &key, std::string const &value);
 

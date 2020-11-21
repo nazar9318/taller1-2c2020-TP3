@@ -9,11 +9,11 @@ std::string MethodGet::respond(std::string const &message) {
 	std::string resource = Parser::getResource(message);
 	if (resource.compare("/") == 0) {
 		answer << " 200 OK\nContent-Type: text/html\n\n";
-		answer << this->resources("root");
+		answer << this->resources["root"];
 		return answer.str();
-	} else if (this->resources(resource) != "") {
+	} else if (this->resources[resource] != "") {
 		answer << " 200 OK\nContent-Type: text/html\n\n";
-		answer << this->resources(resource);
+		answer << this->resources[resource];
 		return answer.str();
 	}
 	answer << " 404 NOT FOUND\n\n";

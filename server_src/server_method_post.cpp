@@ -10,7 +10,7 @@ std::string MethodPost::respond(std::string const &message) {
 	if (resource.compare("/") != 0) {
 		this->resources.store(resource, Parser::getBody(message));
 		answer << " 200 OK\n\n";
-		answer << this->resources(resource);
+		answer << this->resources[resource];
 		return answer.str();
 	}
 	answer << " 403 FORBIDDEN\n\n";

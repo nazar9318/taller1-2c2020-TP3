@@ -3,13 +3,10 @@
 Impressor::Impressor() {}
 
 void Impressor::operator()(std::string const &message) const {
-	std::stringstream server_out;
-	server_out << Parser::getMethod(message);
-	server_out << " ";
-	server_out << Parser::getResource(message);
-	server_out << " ";
-	server_out << Parser::getProtocol(message);
-	std::cout << server_out.str() << std::endl;
+	std::stringstream stream_message(message);
+	std::string out;
+	getline(stream_message, out);
+	std::cout << out << std::endl;
 }
 
 Impressor::~Impressor() {}
