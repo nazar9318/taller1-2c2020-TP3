@@ -9,8 +9,7 @@ void Impressor::operator()(std::string const &message) const {
 	server_out << Parser::getResource(message);
 	server_out << " ";
 	server_out << Parser::getProtocol(message);
-	std::string out = server_out.str();
-	std::cout << out << std::endl;
+	std::cout << server_out.str() << std::endl;
 }
 
 Impressor::~Impressor() {}

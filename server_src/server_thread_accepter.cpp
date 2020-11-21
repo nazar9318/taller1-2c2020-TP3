@@ -6,6 +6,7 @@ ThreadAccepter::ThreadAccepter(Socket &server, Resource &resources)
 void ThreadAccepter::stopClients() {
 	for (unsigned int i = 0; i < this->accepted.size(); i++) {
 		if (!this->accepted[i]->running()) {
+			this->accepted[i]->stop();
 			this->accepted[i]->join();
 			delete this->accepted[i];
 			this->accepted.erase(this->accepted.begin() + i);

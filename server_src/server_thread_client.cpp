@@ -8,15 +8,14 @@ peer(std::move(peer)), resources(resources), is_running(true) {}
 std::string ThreadClient::receiveMessage() {
 	std::stringstream stream;
 	int recvd = 0;
-        do {
-            std::vector<uint8_t> buffer(64);
-            recvd = this->peer.recv(buffer.data(), buffer.size());
-            std::string response(buffer.begin(), buffer.end());
-            stream << response;
-        } while (recvd > 0);
-	std::string message = stream.str();
+    do {
+        std::vector<uint8_t> buffer(64);
+        recvd = this->peer.recv(buffer.data(), buffer.size());
+        std::string response(buffer.begin(), buffer.end());
+        stream << response.substr(0, recvd);
+    } while (recvd > 0);
 	this->peer.stopReceiving();
-	return message;
+	return stream.str();
 }
 
 void ThreadClient::run() {
@@ -44,8 +43,8 @@ bool ThreadClient::running() const {
 }
 
 void ThreadClient::stop() {
+	this->is_running = false;
 	this->peer.close();
 }
 
 ThreadClient::~ThreadClient() {}
-

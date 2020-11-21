@@ -17,12 +17,14 @@ void ClientUser::run() {
 		this->client.send((unsigned char*)message.c_str(), message.size());
 		this->client.stopSending();
 		int recvd = 0;
+		std::stringstream out;
 		do {
 			std::vector<uint8_t> buffer(64);
 			recvd = this->client.recv(buffer.data(), buffer.size());
 			std::string response(buffer.begin(), buffer.end());
-			std::cout << response.substr(0, recvd);
+			out << response.substr(0, recvd);
 		} while (recvd > 0);
+		std::cout << out.str();
 		this->client.stopReceiving();
 	} catch (const SocketError &e) {
 		std::cout << e.what() << std::endl;
@@ -34,4 +36,3 @@ void ClientUser::ejecutar() {
 }
 
 ClientUser::~ClientUser() {}
-
