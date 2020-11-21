@@ -17,7 +17,8 @@ class ThreadAccepter : public Thread {
         Resource &resources;
         std::vector<ThreadClient*> accepted;
         bool keep_accepting;
-        void stopClients();
+        void cleanNonRunningClients();
+        void cleanRemainingClients();
     public:
         //Constructor: recibe una referencia al
         //servidor y otra al repositorio de recursos

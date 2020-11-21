@@ -27,32 +27,16 @@ std::string Parser::getProtocol(std::string const &message) {
 std::string Parser::getBodyFile(std::string const &file_name) {
 	std::ifstream file;
 	file.open(file_name);
-	std::string body;
-	std::string aux;
-	while (!file.eof()) {
-		std::getline(file, aux);
-		body += aux+"\n";
-	}
-	body.pop_back();
-	return body;
+	std::stringstream buff;
+	buff << file.rdbuf();
+	std::string out = buff.str();
+	return out;
 }
 
 std::string Parser::getBody(std::string const &message) {
-	std::stringstream buff;
-	std::string body;
-	buff << message;
-	std::getline(buff, body);
-	while (body.size() > 0) {
-		std::getline(buff, body);
-	}
-	std::string aux;
-	body = "";
-	while (!buff.eof()) {
-		std::getline(buff, aux);
-		body += aux+"\n";
-	}
-	body.pop_back();
-	return body;
+	size_t pos_double_jump = message.find("\n\n");
+	std::string out = message.substr(pos_double_jump+2);
+	return out;
 }
 
 Parser::~Parser() {}

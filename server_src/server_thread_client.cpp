@@ -5,7 +5,17 @@
 ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :
 peer(std::move(peer)), resources(resources), is_running(true) {}
 
-std::string ThreadClient::receiveMessage() {
+void ThreadClient::sendToClient(std::string const& message) {
+	Impressor out;
+	out(message);
+	Response answer(this->resources);
+	std::string resp = answer(message);
+	std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
+	this->peer.send(resp_to_send.data(), resp_to_send.size());
+	this->peer.stopSending();
+}
+
+std::string ThreadClient::receiveFromClient() {
 	std::stringstream stream;
 	int recvd = 0;
     do {
@@ -20,14 +30,7 @@ std::string ThreadClient::receiveMessage() {
 
 void ThreadClient::run() {
 	try {
-		std::string message = this->receiveMessage();
-		Impressor out;
-		out(message);
-		Response answer(this->resources);
-		std::string resp = answer(message);
-		std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
-		this->peer.send(resp_to_send.data(), resp_to_send.size());
-		this->peer.stopSending();
+		this->sendToClient(this->receiveFromClient());
 		this->is_running = false;
 	} catch (const SocketError &e) {
 		if (!this->is_running) {

@@ -11,6 +11,8 @@ class ClientUser : public Thread {
     private:
         Socket client;
         void run() override;
+        void sendToServer();
+        void receiveFromServer();
     public:
         ClientUser(int argc, char* argv[]);
 

@@ -17,7 +17,8 @@ class ThreadClient : public Thread {
         Socket peer;
         Resource &resources;
         std::atomic<bool> is_running;
-        std::string receiveMessage();
+        std::string receiveFromClient();
+        void sendToClient(std::string const& message);
     public:
         //Función: recibe las referencias al peer con
         //el que se comunica y al repositorio de recursos
