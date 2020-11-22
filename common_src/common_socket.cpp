@@ -99,8 +99,8 @@ int Socket::recv(uint8_t* msge, size_t size) {
 
 Socket::Socket(Socket&& other) {
 	if (this != &other) {
-		this->fd = std::move(other.fd);
-		this->is_server = std::move(other.is_server);
+		this->fd = other.fd;
+		this->is_server = other.is_server;
 		other.fd = -1;
 	}
 }

@@ -30,6 +30,7 @@ std::string Parser::getBodyFile(std::string const &file_name) {
 	std::stringstream buff;
 	buff << file.rdbuf();
 	std::string out = buff.str();
+	file.close();
 	return out;
 }
 
