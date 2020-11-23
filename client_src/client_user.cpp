@@ -11,7 +11,8 @@ void ClientUser::sendToServer() {
 	std::stringbuf buffer_in;
 	std::cin.get(buffer_in, EOF);
 	std::string message = buffer_in.str();
-	this->client.send((uint8_t*)message.data(), message.size());
+	std::vector<uint8_t> to_send(message.begin(), message.end());
+	this->client.send(to_send, message.size());
 	this->client.stopSending();	
 }
 
@@ -19,9 +20,9 @@ void ClientUser::receiveFromServer() {
 	int recvd = 0;
 	std::stringstream out;
 	do {
-		std::vector<uint8_t> buffer(64);
-		recvd = this->client.recv(buffer.data(), buffer.size());
-		std::string response(buffer.begin(), buffer.end());
+		std::vector<uint8_t> buff(64);
+		recvd = this->client.recv(buff, buff.size());
+		std::string response(buff.begin(), buff.end());
 		out << response.substr(0, recvd);
 	} while (recvd > 0);
 	std::cout << out.str();

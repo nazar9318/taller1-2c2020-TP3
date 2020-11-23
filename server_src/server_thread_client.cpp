@@ -7,10 +7,10 @@ std::string ThreadClient::receiveFromClient() {
 	std::stringstream stream;
 	int recvd = 0;
     do {
-        std::vector<uint8_t> buffer(64);
-        recvd = this->peer.recv(buffer.data(), buffer.size());
-        std::string response(buffer.begin(), buffer.end());
-        stream << response.substr(0, recvd);
+		std::vector<uint8_t> buff(64);
+		recvd = this->peer.recv(buff, buff.size());
+		std::string response(buff.begin(), buff.end());
+		stream << response.substr(0, recvd);
     } while (recvd > 0);
 	this->peer.stopReceiving();
 	return stream.str();
@@ -21,8 +21,8 @@ void ThreadClient::answerToClient(std::string const& message) {
 	out(message);
 	Response answer(this->resources);
 	std::string resp = answer(message);
-	std::vector<uint8_t> resp_to_send(resp.begin(), resp.end());
-	this->peer.send(resp_to_send.data(), resp_to_send.size());
+	std::vector<uint8_t> to_send(resp.begin(), resp.end());
+	this->peer.send(to_send, to_send.size());
 	this->peer.stopSending();
 }
 

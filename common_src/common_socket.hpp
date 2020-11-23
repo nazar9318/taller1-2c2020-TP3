@@ -9,9 +9,10 @@
 #include <stdlib.h>
 #include <iostream>
 #include <errno.h>
-#include <string.h>
 #include <unistd.h>
 #include <utility>
+#include <string>
+#include <vector>
 #include "socket_error.hpp"
 
 class Socket {
@@ -67,10 +68,10 @@ class Socket {
 
 		//Funcion: Envia mensaje de tamaño size al
 		//file_descriptor con el que está conectado.
-		int send(uint8_t* msge, size_t size);
+		int send(std::vector<uint8_t> &msge, size_t size);
 
 		//Funcion: El server recibe el mensaje del cliente
-		int recv(uint8_t* msge, size_t size);
+		int recv(std::vector<uint8_t> &msge, size_t size);
 
 		//Funcion: Server recibe y acepta una conexion del cliente
 		int listen();

@@ -67,11 +67,11 @@ Socket::Socket(const char* host, const char* port, bool is) {
 	freeaddrinfo(direcciones);
 }
 
-int Socket::send(uint8_t* msge, size_t size) {
+int Socket::send(std::vector<uint8_t> &msge, size_t size) {
 	int sent = 0;
 	size_t total = 0;
 	do {
-		sent = ::send(this->fd, msge + total, size - total, MSG_NOSIGNAL);
+		sent = ::send(this->fd, msge.data() + total, size - total, MSG_NOSIGNAL);
 		if (sent < 0) {
 			throw SocketError("fallo al enviar mensaje: %d, %d\n", sent, __LINE__);
 		}
@@ -80,11 +80,11 @@ int Socket::send(uint8_t* msge, size_t size) {
 	return total;
 }
 
-int Socket::recv(uint8_t* msge, size_t size) {
+int Socket::recv(std::vector<uint8_t> &msge, size_t size) {
 	int received = 0;
 	size_t total = 0;
 	do {
-		received = ::recv(this->fd, msge + total, size - total, 0);
+		received = ::recv(this->fd, msge.data() + total, size - total, 0);
 		if (received < 0) {
 			throw SocketError("fallo al recibir mensaje: %d, %d\n", received, __LINE__);
 		}
