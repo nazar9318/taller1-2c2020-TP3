@@ -1,6 +1,8 @@
-#ifndef CLIENT_THREAD_H
-#define CLIENT_THREAD_H
+#ifndef COMMON_THREAD_H
+#define COMMON_THREAD_H
 
+#include <utility>
+#include "common_error.hpp"
 #include <thread>
 
 class Thread {

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include "../common_src/common_socket.hpp"
 #include "../common_src/common_thread.hpp"

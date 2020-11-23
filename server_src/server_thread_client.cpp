@@ -1,5 +1,3 @@
-#include <utility>
-#include <syslog.h>
 #include "server_thread_client.hpp"
 
 ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :

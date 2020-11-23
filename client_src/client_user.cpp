@@ -1,6 +1,4 @@
 #include "client_user.hpp"
-#include <vector>
-#include <sstream>
 
 ClientUser::ClientUser(int argc, char* argv[]) : 
 client(argv[1], argv[2], false) {

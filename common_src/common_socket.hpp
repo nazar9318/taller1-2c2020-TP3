@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <utility>
 #include "socket_error.hpp"
 
 class Socket {

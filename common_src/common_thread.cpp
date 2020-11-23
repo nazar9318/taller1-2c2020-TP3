@@ -1,6 +1,4 @@
-#include <utility>
 #include "common_thread.hpp"
-#include "socket_error.hpp"
 
 Thread::Thread() {}
 

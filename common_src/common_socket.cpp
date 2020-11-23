@@ -1,9 +1,5 @@
 #define _POSIX_C_SOURCE 200112L
 #include "common_socket.hpp"
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-#include <utility>
 
 //Funcion: Enlaza al socket con la direccion pasada por parametro
 //Pre condicion: Ninguna.
