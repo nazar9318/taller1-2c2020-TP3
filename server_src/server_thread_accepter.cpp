@@ -17,8 +17,8 @@ void ThreadAccepter::cleanNonRunningClients() {
 		if (!this->accepted[i]->running()) {
 			this->accepted[i]->stop();
 			this->accepted[i]->join();
-			delete this->accepted[i];
-			this->accepted.erase(this->accepted.begin() + i);
+//			delete this->accepted[i];
+//			this->accepted.erase(this->accepted.begin() + i);
 		}
 	}
 }

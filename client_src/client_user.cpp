@@ -12,20 +12,17 @@ void ClientUser::sendToServer() {
 	std::cin.get(buffer_in, EOF);
 	std::string message = buffer_in.str();
 	std::vector<uint8_t> to_send(message.begin(), message.end());
-	this->client.send(to_send, message.size());
+	this->client.send(to_send);
 	this->client.stopSending();	
 }
 
 void ClientUser::receiveFromServer() {
 	int recvd = 0;
 	std::stringstream out;
-	do {
-		std::vector<uint8_t> buff(64);
-		recvd = this->client.recv(buff, buff.size());
-		std::string response(buff.begin(), buff.end());
-		out << response.substr(0, recvd);
-	} while (recvd > 0);
-	std::cout << out.str();
+	std::vector<uint8_t> buff;
+	recvd = this->client.recv(buff);
+	std::string response(buff.begin(), buff.end());
+	std::cout << response.substr(0, recvd);
 	this->client.stopReceiving();
 }
 

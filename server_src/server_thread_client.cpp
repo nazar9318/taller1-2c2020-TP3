@@ -1,4 +1,5 @@
 #include "server_thread_client.hpp"
+#include <mutex>
 
 ThreadClient::ThreadClient(Socket&& peer, Resource &resources) :
 peer(std::move(peer)), resources(resources), is_running(true) {}
@@ -6,24 +7,23 @@ peer(std::move(peer)), resources(resources), is_running(true) {}
 std::string ThreadClient::receiveFromClient() {
 	std::stringstream stream;
 	int recvd = 0;
-    do {
-		std::vector<uint8_t> buff(64);
-		recvd = this->peer.recv(buff, buff.size());
-		std::string response(buff.begin(), buff.end());
-		stream << response.substr(0, recvd);
-    } while (recvd > 0);
+	std::vector<uint8_t> buff;
+	recvd = this->peer.recv(buff);
+	std::string response(buff.begin(), buff.end());
 	this->peer.stopReceiving();
-	return stream.str();
+	return response.substr(0, recvd);;
 }
 
 void ThreadClient::answerToClient(std::string const& message) {
-	Impressor out;
-	out(message);
 	Response answer(this->resources);
 	std::string resp = answer(message);
 	std::vector<uint8_t> to_send(resp.begin(), resp.end());
-	this->peer.send(to_send, to_send.size());
+	this->peer.send(to_send);
 	this->peer.stopSending();
+	std::mutex m;
+	Lock lock(m);
+	Impressor out;
+	out(message);
 }
 
 void ThreadClient::run() {

@@ -68,10 +68,10 @@ class Socket {
 
 		//Funcion: Envia mensaje de tamaño size al
 		//file_descriptor con el que está conectado.
-		int send(std::vector<uint8_t> &msge, size_t size);
+		int send(std::vector<uint8_t> &msge);
 
 		//Funcion: El server recibe el mensaje del cliente
-		int recv(std::vector<uint8_t> &msge, size_t size);
+		int recv(std::vector<uint8_t> &msge);
 
 		//Funcion: Server recibe y acepta una conexion del cliente
 		int listen();

@@ -12,6 +12,7 @@
 #include "server_impressor.hpp"
 #include "../common_src/common_socket.hpp"
 #include "../common_src/common_thread.hpp"
+#include "server_lock.hpp"
 
 class ThreadClient : public Thread {
     private:

@@ -67,29 +67,29 @@ Socket::Socket(const char* host, const char* port, bool is) {
 	freeaddrinfo(direcciones);
 }
 
-int Socket::send(std::vector<uint8_t> &msge, size_t size) {
+int Socket::send(std::vector<uint8_t> &msge) {
 	int sent = 0;
 	size_t total = 0;
 	do {
-		sent = ::send(this->fd, msge.data() + total, size - total, MSG_NOSIGNAL);
+		sent = ::send(this->fd, msge.data() + total, 64, MSG_NOSIGNAL);
 		if (sent < 0) {
 			throw SocketError("fallo al enviar mensaje: %d, %d\n", sent, __LINE__);
 		}
 		total += sent;
-	} while (sent > 0 && total < size);
+	} while (sent > 0);
 	return total;
 }
 
-int Socket::recv(std::vector<uint8_t> &msge, size_t size) {
+int Socket::recv(std::vector<uint8_t> &msge) {
 	int received = 0;
 	size_t total = 0;
 	do {
-		received = ::recv(this->fd, msge.data() + total, size - total, 0);
+		received = ::recv(this->fd, msge.data() + total, 64, 0);
 		if (received < 0) {
 			throw SocketError("fallo al recibir mensaje: %d, %d\n", received, __LINE__);
 		}
 		total += received;
-	} while (received > 0 && total < size);
+	} while (received > 0);
 	return total;
 }
 
