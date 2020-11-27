@@ -71,24 +71,26 @@ int Socket::send(std::vector<uint8_t> &msge) {
 	int sent = 0;
 	size_t total = 0;
 	do {
-		sent = ::send(this->fd, msge.data() + total, 64, MSG_NOSIGNAL);
+		sent = ::send(this->fd, msge.data() + total, msge.size(), MSG_NOSIGNAL);
 		if (sent < 0) {
 			throw SocketError("fallo al enviar mensaje: %d, %d\n", sent, __LINE__);
 		}
 		total += sent;
-	} while (sent > 0);
+	} while (sent > 0 && total < msge.size());
 	return total;
 }
 
 int Socket::recv(std::vector<uint8_t> &msge) {
 	int received = 0;
 	size_t total = 0;
+	msge.resize(64);
 	do {
-		received = ::recv(this->fd, msge.data() + total, 64, 0);
+		received = ::recv(this->fd, msge.data() + total, msge.size(), 0);
 		if (received < 0) {
 			throw SocketError("fallo al recibir mensaje: %d, %d\n", received, __LINE__);
 		}
 		total += received;
+		msge.resize(total);
 	} while (received > 0);
 	return total;
 }
